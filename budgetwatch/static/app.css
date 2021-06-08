@@ -3,9 +3,9 @@ body {
 }
 
 
-.container-fluid {
+/* .container-fluid {
     text-align: center;
-}
+} */
 
 .form-section {
     background: #ffffff;
@@ -14,3 +14,7 @@ body {
     border-radius: 3px;
     margin-bottom: 20px;
   }
+
+.justify-self-center {
+    text-align: center;
+}

@@ -4,7 +4,6 @@ from budgetwatch.forms import RegistrationForm, LoginForm, DataEntryForm, Update
 from budgetwatch.models import User, Entry
 from flask_login import login_user, current_user, logout_user, login_required
 
-@app.route('/', methods=['GET', 'POST'])
 @app.route('/home', methods=['GET', 'POST'])
 @login_required
 def home():
@@ -31,6 +30,7 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html', form=form)
 
+@app.route('/', methods=['GET', 'POST'])
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -39,7 +39,7 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
-            login_user(user, remember=True)
+            login_user(user, remember=form.remember)
             next_page = request.args.get('next')
             return redirect(next_page) if next_page else redirect(url_for('home'))
         else:
