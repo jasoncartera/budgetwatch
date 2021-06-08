@@ -49,7 +49,7 @@ def login():
 @app.route('/summary')
 @login_required
 def summary():
-    entries = Entry.query.filter_by(user_id=current_user.id)
+    entries = Entry.query.filter_by(user_id=current_user.id).limit(5)
     return render_template('summary.html', title='Account Summary', entries=entries)
 
 
