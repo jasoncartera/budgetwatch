@@ -74,11 +74,6 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
-@app.route("/home/<int:entry_id>")
-def entry(entry_id):
-    entry = Entry.query.get_or_404(entry_id)
-    return render_template('entry.html', title=entry.item, entry=entry)
-
 @app.route('/home/<int:entry_id>/update', methods=['GET', 'POST'])
 @login_required
 def update_entry(entry_id):
@@ -92,11 +87,11 @@ def update_entry(entry_id):
         entry.price = form.price.data
         entry.location = form.location.data
         db.session.commit()
-        flash('Your post has been updated', 'success')
+        flash('Your entry has been updated', 'success')
         return redirect(url_for('summary'))
     elif request.method == 'GET':
         form.item.data = entry.item
         form.category.data = entry.category
-        form.price.data = entry.price
+        form.price.data = float(entry.price)
         form.location.data = entry.location
     return render_template('home.html', title='Update Entry', form=form)
