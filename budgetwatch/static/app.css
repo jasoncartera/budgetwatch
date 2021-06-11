@@ -19,3 +19,43 @@ body {
     text-align: center;
     justify-content: center;
 }
+
+.entry-row {
+    border: 1px solid gray;
+    font-size: small;
+    background-color: rgb(125, 206, 160, 0.2);
+    transition: background-color 0.5s;
+
+}
+
+.entry-row:hover {
+    background-color: rgb(125, 206, 160, 0.9);
+}
+
+.entry-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-right: 1px solid gray;
+    text-align: center;
+    height: 3em;
+}
+
+.entry-item:last-of-type {
+    border-right: 0;
+}
+
+.cell-title {
+    font-size: 10px;
+    color: gray;
+    position: absolute;
+    top: 0;
+
+}
+
+.cell-value {
+    position: absolute;
+    top: 15px;
+}
+
