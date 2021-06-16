@@ -2,10 +2,25 @@
 {% block content %}
 <h2 class='justify-self-center'>Summary for {{ current_user.username }}</h2>
 
+
+<div class="container">
+    <div class="summary-panel">
+        {% for category in category_sum %}
+        <div class="row">
+            <div class="col summary-item">
+                {{ category[0] }}
+            </div>
+            <div class="col summary-item">
+                {{ category[1] }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 <div class="container">
     {% for entry in entries %}
     <div class="entry-row row d-flex mt-1 pt-0 pb-0">
-        <div class="entry-item col-1 pt-0 pb-0">
+        <div class="entry-item col-1">
             <div class="cell-title">
                 <p>ID</p>
             </div>
@@ -21,7 +36,7 @@
                 {{ entry.item }}
             </div>
         </div>
-        <div class="entry-item col-1">
+        <div class="entry-item col">
             <div class="cell-title">
                 <p>Price</p>
             </div>
@@ -29,7 +44,7 @@
                 {{ entry.price }}
             </div>
         </div>
-        <div class="entry-item col">
+        <div class="entry-item col cell-remove">
             <div class="cell-title">
                 <p>Category</p>
             </div>
@@ -53,15 +68,11 @@
                 {{ entry.date_posted.strftime('%m-%d-%Y') }}
             </div>
         </div>
-        <div class="entry-item col-1">
-            <a href="{{ url_for('update_entry', entry_id=entry.id) }}" class="btn btn-warning btn-sm">Update</a>
-        </div>
-        <div class="entry-item col-1">
-            <a href="{{ url_for('update_entry', entry_id=entry.id) }}" class="btn btn-danger btn-sm">Delete</a>
+        <div class="entry-item col">
+            <a href="{{ url_for('update_entry', entry_id=entry.id) }}" class="btn btn-warning btn-sm p-0">Update</a>
         </div>
     </div>
     {% endfor %}
 </div>
-
 
 {% endblock content %}

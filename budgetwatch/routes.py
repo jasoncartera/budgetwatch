@@ -9,7 +9,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 def home():
     form = DataEntryForm()
     if form.validate_on_submit():
-        entry = Entry(item=form.item.data, category=form.category.data, price=str(form.price.data), location=form.location.data, date_posted=form.date.data, user_id=current_user.id)
+        entry = Entry(item=form.item.data.capitalize(), category=form.category.data.capitalize(), price=str(form.price.data), location=form.location.data.capitalize(), date_posted=form.date.data, user_id=current_user.id)
         db.session.add(entry)
         db.session.commit()
         flash('Data has been entered', 'success')
@@ -49,8 +49,9 @@ def login():
 @app.route('/summary')
 @login_required
 def summary():
-    entries = Entry.query.filter_by(user_id=current_user.id).limit(5)
-    return render_template('summary.html', title='Account Summary', entries=entries)
+    entries = Entry.query.filter_by(user_id=current_user.id).limit(20)
+    category_sum = db.session.query(Entry.category, db.func.sum(Entry.price)).group_by(Entry.category).all()
+    return render_template('summary.html', title='Account Summary', entries=entries, category_sum=category_sum)
 
 
 @app.route('/settings', methods=['GET', 'POST'])
@@ -74,7 +75,7 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
-@app.route('/home/<int:entry_id>/update', methods=['GET', 'POST'])
+@app.route('/update/<int:entry_id>', methods=['GET', 'POST'])
 @login_required
 def update_entry(entry_id):
     entry = Entry.query.get_or_404(entry_id)
@@ -84,7 +85,7 @@ def update_entry(entry_id):
     if form.validate_on_submit():
         entry.item = form.item.data
         entry.category = form.category.data
-        entry.price = form.price.data
+        entry.price = str(form.price.data)
         entry.location = form.location.data
         db.session.commit()
         flash('Your entry has been updated', 'success')
@@ -94,4 +95,16 @@ def update_entry(entry_id):
         form.category.data = entry.category
         form.price.data = float(entry.price)
         form.location.data = entry.location
-    return render_template('home.html', title='Update Entry', form=form)
+        form.date.data = entry.date_posted
+    return render_template('update.html', title='Update Entry', form=form, entry=entry)
+
+@app.route('/update/<int:entry_id>/delete', methods=['POST'])
+@login_required
+def delete_entry(entry_id):
+    entry = Entry.query.get_or_404(entry_id)
+    if entry.user != current_user:
+        abort(403)
+    db.session.delete(entry)
+    db.session.commit()
+    flash('Your entry has been deleted', 'success')
+    return redirect(url_for('summary'))
