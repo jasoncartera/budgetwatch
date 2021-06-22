@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
-<h2 class='justify-self-center'>Summary for {{ current_user.username }}</h2>
+<h2 class='justify-self-center'>{{ month }}, {{ year }} summary for {{ current_user.username }}</h2>
 
 
 <div class="container">
@@ -65,7 +65,7 @@
                 <p>Date</p>
             </div>
             <div class="cell-value">
-                {{ entry.date_posted.strftime('%m-%d-%Y') }}
+                {{ entry.date_posted | pacific_time }}
             </div>
         </div>
         <div class="entry-item col">
