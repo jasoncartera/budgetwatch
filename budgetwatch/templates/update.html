@@ -77,7 +77,7 @@
                 {{ form.submit(class="btn btn-outline-success") }}
             </div>
             <div class="delete-entry">
-                <input class="btn btn-danger delete-entry" type="submit" value="Delete" formaction="{{ url_for('delete_entry', entry_id=entry.id) }}">
+                <input class="btn btn-danger delete-entry" type="submit" value="Delete" formaction="{{ url_for('entry.delete_entry', entry_id=entry.id) }}">
             </div>
         </form>
     </div>

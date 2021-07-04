@@ -40,14 +40,14 @@
                 {{ form.submit(class="btn btn-outline-success") }}
             </div>
             <small class="text-muted ml-2">
-                <a href="{{ url_for('reset_request') }}">Forgot Password?</a>
+                <a href="{{ url_for('users.reset_request') }}">Forgot Password?</a>
             </small>
         </form>
     </div>
 
     <div class="row justify-self-center">
         <p class="text-muted">
-            Need an account? <a href="{{ url_for('register') }}" class="ml-2">Sign Up Now</a>
+            Need an account? <a href="{{ url_for('users.register') }}" class="ml-2">Sign Up Now</a>
         </p>
     </div>
 </div>

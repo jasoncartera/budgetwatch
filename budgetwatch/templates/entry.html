@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
-<a href="{{ url_for('home', entry_id=entry.id) }}"><h2>Entry # {{ entry.id }}</h2></a>
+<a href="{{ url_for('main.home', entry_id=entry.id) }}"><h2>Entry # {{ entry.id }}</h2></a>
 <div class="row justify-content-center">
     <div class="col-8">
         <div class="table-responsive">

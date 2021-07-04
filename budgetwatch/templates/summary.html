@@ -69,7 +69,7 @@
             </div>
         </div>
         <div class="entry-item col">
-            <a href="{{ url_for('update_entry', entry_id=entry.id) }}" class="btn btn-warning btn-sm p-0">Update</a>
+            <a href="{{ url_for('entry.update_entry', entry_id=entry.id) }}" class="btn btn-warning btn-sm p-0">Update</a>
         </div>
     </div>
     {% endfor %}
