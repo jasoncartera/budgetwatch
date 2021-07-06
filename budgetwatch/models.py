@@ -1,5 +1,6 @@
 from datetime import datetime
-from budgetwatch import db, login_manager, app
+from budgetwatch import db, login_manager
+from flask import app
 from flask_login import UserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
