@@ -1,1 +1,1 @@
-web: gunicorn budgetwatch:app
+web: gunicorn run:app
