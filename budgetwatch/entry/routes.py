@@ -29,7 +29,7 @@ def update_entry(entry_id):
     if form.validate_on_submit():
         entry.item = form.item.data
         entry.category = form.category.data
-        entry.price = str(form.price.data)
+        entry.price = form.price.data
         entry.location = form.location.data
         entry.date_posted = form.date.data
         db.session.commit()
@@ -38,7 +38,7 @@ def update_entry(entry_id):
     elif request.method == 'GET':
         form.item.data = entry.item
         form.category.data = entry.category
-        form.price.data = float(entry.price)
+        form.price.data = entry.price
         form.location.data = entry.location
         form.date.data = entry.date_posted
     return render_template('update.html', title='Update Entry', form=form, entry=entry)
