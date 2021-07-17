@@ -15,7 +15,7 @@ def summary():
     month = datetime.today().month
     year = datetime.today().year
     entries = Entry.query.filter_by(user_id=current_user.id).filter(extract('month', Entry.date_posted)==month).filter(extract('year', Entry.date_posted)==year).all()
-    category_sum = db.session.query(Entry.category, db.func.sum(Entry.price)).group_by(Entry.category).filter(extract('month', Entry.date_posted)==month).filter(extract('year', Entry.date_posted)==year).all()
+    category_sum = db.session.query(Entry.category, db.func.sum(Entry.price)).group_by(Entry.category).filter(extract('month', Entry.date_posted)==month).filter(extract('year', Entry.date_posted)==year).filter(Entry.user_id==current_user.id).all()
     return render_template('summary.html', title='Account Summary', entries=entries, category_sum=category_sum, month=calendar.month_name[month], year=year)
 
 
