@@ -15,7 +15,7 @@ def summary():
     month = datetime.today().month
     year = datetime.today().year
     entries = Entry.query.filter_by(user_id=current_user.id).filter(extract('month', Entry.date_posted)==month).filter(extract('year', Entry.date_posted)==year).all()
-    category_sum = db.session.query(Entry.category, db.func.sum(Entry.price)).group_by(Entry.category).filter(extract('month', Entry.date_posted)==month).filter(extract('year', Entry.date_posted)==year).all()
+    category_sum = db.session.query(Entry.category, db.func.sum(Entry.price)).group_by(Entry.category).filter(extract('month', Entry.date_posted)==month).filter(extract('year', Entry.date_posted)==year).filter(Entry.user_id==current_user.id).all()
     return render_template('summary.html', title='Account Summary', entries=entries, category_sum=category_sum, month=calendar.month_name[month], year=year)
 
 
@@ -29,7 +29,7 @@ def update_entry(entry_id):
     if form.validate_on_submit():
         entry.item = form.item.data
         entry.category = form.category.data
-        entry.price = str(form.price.data)
+        entry.price = form.price.data
         entry.location = form.location.data
         entry.date_posted = form.date.data
         db.session.commit()
@@ -38,7 +38,7 @@ def update_entry(entry_id):
     elif request.method == 'GET':
         form.item.data = entry.item
         form.category.data = entry.category
-        form.price.data = float(entry.price)
+        form.price.data = entry.price
         form.location.data = entry.location
         form.date.data = entry.date_posted
     return render_template('update.html', title='Update Entry', form=form, entry=entry)
